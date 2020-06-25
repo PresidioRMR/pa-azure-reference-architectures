@@ -1,0 +1,130 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01-preview/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "paloVMName": {
+        "type": "string",
+        "metadata": {
+          "description": "Name of VM-Series FW in the Azure portal"
+        }
+      },
+      "vmSize": {
+        "type": "string",
+        "allowedValues": [
+          "Standard_D3",
+          "Standard_D4",
+          "Standard_D3_v2",
+          "Standard_D4_v2",
+          "Standard_A4",
+          "Standard_DS3_v2",
+          "Standard_DS4_v2"
+        ],
+        "metadata": {
+          "description": "Azure VM size for VM-Series"
+        },
+        "defaultValue": "Standard_D3_v2"
+      },
+      "availabiltyZone":{
+        "type": "string",
+        "allowedValues": ["1","2","3"],
+        "defaultValue": "1",
+        "metadata": {
+          "description": "Availabilty Zone, not all regions support AZs"
+        }
+      },
+      "imageVersion": {
+        "type": "string",
+        "allowedValues": [
+          "7.1.1",
+          "8.0.0",
+          "8.1.0",
+          "9.0.0",
+          "latest"
+        ],
+        "metadata": {
+          "description": "PAN OS Version"
+        },
+        "defaultValue": "8.1.0"
+      },
+      "imageSku": {
+        "type": "string",
+        "allowedValues": [
+          "byol",
+          "bundle1",
+          "bundle2"
+        ],
+        "metadata": {
+          "description": "Firewall License Model"
+        },
+        "defaultValue": "byol"
+      },
+      "vnetName": {
+        "type": "string",
+        "metadata": {
+          "description": "Existing VNet"
+        }
+      },
+      "vnetNetworkExistingRGName": {
+        "type": "string",
+        "defaultValue": "",
+        "metadata": {
+          "description": "Name of resource group of EXISTING VNET"
+        }
+      },
+      "managementSubnetName": {
+        "type": "string",
+        "defaultValue": "Management",
+        "metadata": {
+          "description": "Management Subnet name"
+        }
+      },
+      "firewallManagementPrivateIPAddress": {
+        "type": "string",
+        "defaultValue": "10.0.0.4",
+        "metadata": {
+          "description": "Management subnet static address for firewall"
+        }
+      },
+      "untrustSubnetName": {
+        "type": "string",
+        "defaultValue": "Untrust",
+        "metadata": {
+          "description": "Untrust Subnet name"
+        }
+      },
+      "firewallUntrustPrivateIPAddress": {
+        "type": "string",
+        "defaultValue": "10.0.1.4",
+        "metadata": {
+          "description": "Untrust subnet static address for firewall"
+        }
+      },
+      "trustSubnetName": {
+        "type": "string",
+        "defaultValue": "Trust",
+        "metadata": {
+          "description": "Trust Subnet name"
+        }
+      },
+      "firewallTrustPrivateIPAddress": {
+        "type": "string",
+        "defaultValue": "10.0.2.4",
+        "metadata": {
+          "description": "Trust subnet static address for firewall"
+        }
+      },
+      "adminUsername": {
+        "type": "string",
+        "metadata": {
+          "description": "Username of the administrator account of VMs"
+        }
+      },
+      "adminPassword": {
+        "type": "securestring",
+        "defaultValue": "",
+        "metadata": {
+          "description": "Password for the administrator account of VMs"
+        }
+      }
+    }
+}  
