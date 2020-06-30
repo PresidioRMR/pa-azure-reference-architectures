@@ -158,18 +158,6 @@
       "metadata": {
         "description": "Password for the administrator account of VM-Series"
       }
-    },
-    "fw1ManagementPublicIPName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of FW1 Management Public Address"
-      }
-    },
-    "fw2ManagementPublicIPName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of FW2 Management Public Address"
-      }
     }
   },
   "variables": {
@@ -197,39 +185,10 @@
       }
     },
     {
-      "apiVersion": "2020-04-01",
-      "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[parameters('fw1ManagementPublicIPName')]",
-      "location": "[resourceGroup().location]",
-      "sku": {
-        "name": "Standard",
-        "tier": "Regional"
-      },
-      "properties": {
-        "publicIPAllocationMethod": "Static"
-      }
-    },
-    {
-      "apiVersion": "2020-04-01",
-      "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[parameters('fw2ManagementPublicIPName')]",
-      "location": "[resourceGroup().location]",
-      "sku": {
-        "name": "Standard",
-        "tier": "Regional"
-      },
-      "properties": {
-        "publicIPAllocationMethod": "Static"
-      }
-    },
-    {
       "name": "[concat(variables('fw1NicName'), '0')]",
       "type": "Microsoft.Network/networkInterfaces",
       "location": "[resourceGroup().location]",
       "apiVersion": "2020-04-01",
-      "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', parameters('fw1ManagementPublicIPName'))]"
-      ],
       "properties": {
         "ipConfigurations": [
           {
@@ -237,9 +196,6 @@
             "properties": {
               "privateIPAllocationMethod": "Static",
               "privateIPAddress": "[parameters('fw1ManagementPrivateIPAddress')]",
-              "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('fw1ManagementPublicIPName'))]"
-              },
               "subnet": {
                 "id": "[variables('subnet0Ref')]"
               }
@@ -297,9 +253,6 @@
       "type": "Microsoft.Network/networkInterfaces",
       "location": "[resourceGroup().location]",
       "apiVersion": "2020-04-01",
-      "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', parameters('fw2ManagementPublicIPName'))]"
-      ],
       "properties": {
         "ipConfigurations": [
           {
@@ -307,9 +260,6 @@
             "properties": {
               "privateIPAllocationMethod": "Static",
               "privateIPAddress": "[parameters('fw2ManagementPrivateIPAddress')]",
-              "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('fw2ManagementPublicIPName'))]"
-              },
               "subnet": {
                 "id": "[variables('subnet0Ref')]"
               }
