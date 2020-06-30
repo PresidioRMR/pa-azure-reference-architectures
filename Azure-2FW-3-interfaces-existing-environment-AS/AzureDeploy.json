@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.13",
   "parameters": {
     "paloVM1Name": {
@@ -74,7 +74,7 @@
       "metadata": {
         "description": "Name of the EXISTING Virtual Network (VNET)"
       },
-      "defaultValue": "AzureRA-VNet"
+      "defaultValue": ""
     },
     "virtualNetworkExistingRGName": {
       "type": "string",
@@ -173,7 +173,6 @@
     }
   },
   "variables": {
-    "apiVersion": "2015-06-15",
     "imagePublisher": "paloaltonetworks",
     "imageOffer": "vmseries1",
     "fw1NicName": "[concat(parameters('paloVM1Name'), '-eth')]",
@@ -187,18 +186,18 @@
     {
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[parameters('fwAvSet')]",
-      "apiVersion": "2018-10-01",
+      "apiVersion": "2019-07-01",
       "location": "[resourceGroup().location]",
-      "sku": {
-        "name": "Aligned"
-      },
       "properties": {
         "platformFaultDomainCount": 3,
         "platformUpdateDomainCount": 3
+      },
+      "sku": {
+        "name": "Aligned"
       }
     },
     {
-      "apiVersion": "2017-08-01",
+      "apiVersion": "2020-04-01",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[parameters('fw1ManagementPublicIPName')]",
       "location": "[resourceGroup().location]",
@@ -211,7 +210,7 @@
       }
     },
     {
-      "apiVersion": "2017-08-01",
+      "apiVersion": "2020-04-01",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[parameters('fw2ManagementPublicIPName')]",
       "location": "[resourceGroup().location]",
@@ -227,7 +226,7 @@
       "name": "[concat(variables('fw1NicName'), '0')]",
       "type": "Microsoft.Network/networkInterfaces",
       "location": "[resourceGroup().location]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "2020-04-01",
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', parameters('fw1ManagementPublicIPName'))]"
       ],
@@ -255,7 +254,7 @@
       "location": "[resourceGroup().location]",
       "dependsOn": [
       ],
-      "apiVersion": "2015-06-15",
+      "apiVersion": "2020-04-01",
       "properties": {
         "enableIPForwarding": true,
         "ipConfigurations": [
@@ -276,7 +275,7 @@
       "name": "[concat(variables('fw1NicName'), '2')]",
       "type": "Microsoft.Network/networkInterfaces",
       "location": "[resourceGroup().location]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "2020-04-01",
       "properties": {
         "enableIPForwarding": true,
         "ipConfigurations": [
@@ -297,7 +296,7 @@
       "name": "[concat(variables('fw2NicName'), '0')]",
       "type": "Microsoft.Network/networkInterfaces",
       "location": "[resourceGroup().location]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "2020-04-01",
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', parameters('fw2ManagementPublicIPName'))]"
       ],
@@ -325,7 +324,7 @@
       "location": "[resourceGroup().location]",
       "dependsOn": [
       ],
-      "apiVersion": "2015-06-15",
+      "apiVersion": "2020-04-01",
       "properties": {
         "enableIPForwarding": true,
         "ipConfigurations": [
@@ -346,7 +345,7 @@
       "name": "[concat(variables('fw2NicName'), '2')]",
       "type": "Microsoft.Network/networkInterfaces",
       "location": "[resourceGroup().location]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "2020-04-01",
       "properties": {
         "enableIPForwarding": true,
         "ipConfigurations": [
@@ -364,7 +363,7 @@
       }
     },
     {
-      "apiVersion": "[variables('apiVersion')]",
+      "apiVersion": "2019-07-01",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[parameters('paloVM1Name')]",
       "location": "[resourceGroup().location]",
@@ -399,8 +398,8 @@
             "version": "[parameters('imageVersion')]"
           },
           "osDisk": {
-                        "createOption": "FromImage"
-                    }
+            "createOption": "FromImage"
+          }
         },
         "networkProfile": {
           "networkInterfaces": [
@@ -427,7 +426,7 @@
       }
     },
     {
-      "apiVersion": "[variables('apiVersion')]",
+      "apiVersion": "2019-07-01",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[parameters('paloVM2Name')]",
       "location": "[resourceGroup().location]",
@@ -462,8 +461,8 @@
             "version": "[parameters('imageVersion')]"
           },
           "osDisk": {
-                        "createOption": "FromImage"
-                    }
+            "createOption": "FromImage"
+          }
         },
         "networkProfile": {
           "networkInterfaces": [
