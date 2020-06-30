@@ -207,7 +207,7 @@
         "tier": "Regional"
       },
       "properties": {
-        "publicIPAllocationMethod": "Static",
+        "publicIPAllocationMethod": "Static"
       }
     },
     {
@@ -220,7 +220,7 @@
         "tier": "Regional"
       },
       "properties": {
-        "publicIPAllocationMethod": "Static",
+        "publicIPAllocationMethod": "Static"
       }
     },
     {
